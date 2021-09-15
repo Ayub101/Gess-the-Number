@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+<body>
+    <div class="game">
+        <p class="heading">
+            <h1>Welcome to Game</h1>
+            <h2>Guess the Number Between 1 to 100 </h2>
+        </p>
+        <p class="input">
+            <label for="input" class="label">Enter the Number:</label>
+            <input type="text" name="input" class="number">
+            <input type="submit" class="submit">
+        </p>
+        <p class="guess"></p>
+        <p class="hiOrlow"></p>
+        <p class="reset"></p>
+    </div>
+    <style>
+        body{
+            text-align: center;
+        }
+        
+    </style>
+    <script>
+        var computerNumber = Math.floor(Math.random()*100+1);
+        var inputField = document.querySelector(".number");
+        var guessedNumber = document.querySelector(".guess");
+        var hiOrLow = document.querySelector(".hiOrlow");
+        var reset = document.querySelector(".reset"); 
+        var submit = document.querySelector(".submit");
+        var numberOfTurn = 1;
+        var isWinner = false;
+        guessField = "Your number is: ";
+        submit.addEventListener("click",createPage);
+        function createPage(){
+            let inputNumber = Number(inputField.value); 
+            guessField +=  inputNumber + " ";  
+            if(numberOfTurn === 10){
+                inputField.value = "";
+                hiOrLow.textContent = "GAME OVER";
+                resetpage();
+            }
+            if(inputNumber === computerNumber){
+                hiOrLow.textContent = "Winner";
+                document.body.style.backgroudColor = "yellow";
+                guessedNumber.textContent = guessField;
+                resetpage();
+            }
+            else if(inputNumber > computerNumber){
+                hiOrLow.textContent = "Guessed Number is too High!!";
+                guessedNumber.textContent = guessField;
+                inputField.focus() ;
+                numberOfTurn += 1;     
+            }
+            else if(inputNumber < computerNumber){
+                hiOrLow.textContent = "Guessed Number is too low!!";
+                hiOrLow.style.backgroudColor = "green";
+                guessedNumber.textContent = guessField;
+                numberOfTurn += 1;     
+                inputField.focus() ;
+            }
+
+            inputField.value = "";
+
+        }
+        function resetpage(){
+            inputField.disabled = true;
+            submit.disabled = true;
+            var resetbtn = document.createElement("button");
+            resetbtn.textContent = 'Start Again';
+            reset.append(resetbtn);
+            resetbtn.addEventListener('click',createnew);
+        }
+
+        function createnew(){
+            numberOfTurn = 1;
+            hiOrLow.textContent = "";
+            guessedNumber.textContent = "";
+            guessField = "Your number is: ";
+            inputField.disabled = false;
+            submit.disabled = false;
+            inputField.focus();
+            reset.removeChild(resetbtn);          
+        }
+    </script>
+</body>
+</html>
